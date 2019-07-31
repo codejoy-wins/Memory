@@ -55,8 +55,10 @@ class App extends React.Component {
             <input type="text" name="color" placeholder="color" onChange={this.handleChange}></input>
             <input type="text" name="background" placeholder="background" onChange={this.handleChange}></input>
           </form>
-          <h1 style={{color:this.state.color, background:this.state.background}}>{this.state.color} text</h1>
-          <h1 style={{color:this.state.color, background:this.state.background}}>{this.state.background} background</h1>
+          <h1 style={{color:this.state.color, background: this.state.background}}>Hello World</h1>
+
+          <h4 style={{color:this.state.color}}>{this.state.color} text</h4>
+          <h4 style={{color:this.state.background}}>{this.state.background} background</h4>
           <p> I was able to do all of this from memory.  This application uses state, and tracks your every keystroke to provide dynamic styling and conditional rendering.  </p>
         </main>
         <footer>
