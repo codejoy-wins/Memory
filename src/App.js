@@ -1,26 +1,70 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Todo from './Todo'
+import todoData from './todoData'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(){
+    super()
+    this.state={
+      todos: todoData,
+      color: "",
+      background: ""
+    }
+    this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleClick(id){
+    console.log("clicked", id)
+    this.setState(prevState=>{
+      const updatedTodos = prevState.todos.map(todo=>{
+        if(todo.id===id){
+          todo.completed = !todo.completed
+        }
+        return todo
+      })
+      return {
+        todos: updatedTodos
+      }
+    })
+  }
+
+  handleChange(event){
+    console.log("handling change")
+    const {name, value} = event.target
+    this.setState({
+      [name]: value
+    })
+  }
+
+  render(){
+    const todos = this.state.todos.map(todo=>{
+      return(
+        <Todo completed={todo.completed} key={todo.id} id={todo.id} desc={todo.desc} handleClick={this.handleClick}/>
+      )
+    })
+    return (
+      <div className="App">
+        <header>
+          <h1> From Memory </h1>
+        </header>
+        <main>
+          {todos}
+          <form>
+            <input type="text" name="color" placeholder="color" onChange={this.handleChange}></input>
+            <input type="text" name="background" placeholder="background" onChange={this.handleChange}></input>
+          </form>
+          <h1 style={{color:this.state.color, background:this.state.background}}>{this.state.color} text</h1>
+          <h1 style={{color:this.state.color, background:this.state.background}}>{this.state.background} background</h1>
+          <p> I was able to do all of this from memory.  This application uses state, and tracks your every keystroke to provide dynamic styling and conditional rendering.  </p>
+        </main>
+        <footer>
+          <h3><a href="https://maxjann.com">Jann Software</a></h3>
+        </footer>
+      </div>
+    );
+  }
 }
 
 export default App;
